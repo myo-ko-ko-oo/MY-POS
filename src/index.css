@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  h1{
+    @apply   text-2xl md:text-4xl text-gray-600 font-semibold
+  }
+  h2{
+    @apply text-3xl text-gray-600 font-semibold
+  }
+  h3{
+    @apply text-2xl text-gray-600
+  }
+}
+@layer components{
+
+  .twoGrid{
+    @apply grid grid-cols-1 md:grid-cols-2 md:mt-7 my-0 
+  }
+  .threeGrid{
+    @apply grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 md:mt-7 my-0 h-screen
+  }
+  .fiveGrid{
+    @apply grid grid-cols-1 lg:grid-cols-6 md:mt-7 my-0
+  }
+}
+@layer utilities{
+  .root {
+    @apply bg-gray-100
+  }
+}

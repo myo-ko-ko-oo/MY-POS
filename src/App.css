@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  font-family: "Poppins", "sans-serif";
+}
+
+.print-layout {
+  width: 80mm;
+  font-family: monospace !important;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+.hr-dash-single{
+  border-top: 2px dashed black;
+  border-radius: 5px;
+  border-bottom: 2px dashed black;
+}
