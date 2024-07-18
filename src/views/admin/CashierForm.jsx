@@ -33,7 +33,7 @@ const CashierForm = () => {
       );
       if(res.data.auth==true){
         console.log(res.data.message);
-        navigate("/admin/cashier")
+        navigate(`/admin/users?message=${res.data.message}`)
       }else{
         setError(res.data)
       }

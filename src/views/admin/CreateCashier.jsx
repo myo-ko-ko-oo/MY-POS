@@ -23,7 +23,7 @@ const CreateCashier = () => {
             Create Cashier
           </span>
         </div>
-        <span onClick={()=>navigate("/admin/cashier")}><BackButton/></span>
+        <span onClick={()=>navigate("/admin/users")}><BackButton/></span>
         <div className="grid lg:grid-cols-4 grid-cols-1 ">
           <div className="empty"></div>
           <div className="col-span-2">

@@ -5,6 +5,8 @@ import { useAuth } from "../../services/provider/AuthContextProvider";
 // import { formatDate } from "react-datepicker/dist/date_utils";
 import instance from "../../services/api/axios";
 import { useNavigate } from "react-router";
+import Receipt from "./print/Receipt";
+import { useSale } from "../../services/provider/SaleContextProvider";
 
 const getInitials = (name) => {
   return name
@@ -31,7 +33,7 @@ const generateVoucherCode = () => {
   return `${prefix}${date}${randomSequence}`;
 };
 
-const VouncherLayout = ({setOpenModal}) => {
+const VouncherLayout = ({ setOpenModal }) => {
   const cart = JSON.parse(localStorage.getItem("cart"));
   const { authUser } = useAuth();
   const { clearCart } = useCart();
@@ -39,8 +41,10 @@ const VouncherLayout = ({setOpenModal}) => {
   // const [voucherCode, setVoucherCode] = useState("");
   const [customerName, setCustomerName] = useState("unknow");
   const [loading, setLoading] = useState(false);
+
   const { token } = useAuth();
-  console.log(cart, "vounher");
+  const { setSaleItems, handlePrintSale } = useSale();
+
   const cashierName = authUser && authUser.name;
   const initials = cashierName ? getInitials(cashierName) : "";
   const headers = {
@@ -64,9 +68,12 @@ const VouncherLayout = ({setOpenModal}) => {
         { cart, customerName, voucherCode },
         { headers }
       );
-      console.log(res.data.message);
+
+      await setSaleItems(res.data.saleItems);
+      // localStorage.setItem('receipt',JSON.stringify(res.data.saleItems));
       clearCart();
-      navigate("/cashier/home");
+      navigate(`/cashier/home?message=${res.data.message}`);
+      
     } catch (error) {
     } finally {
       setLoading(false);
@@ -181,6 +188,7 @@ const VouncherLayout = ({setOpenModal}) => {
             </Button>
           </div>
         </div>
+        <Receipt />
       </form>
     </>
   );

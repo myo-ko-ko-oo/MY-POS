@@ -1,6 +1,17 @@
 import React from "react";
-import { Button, Textarea, Label, TextInput } from "flowbite-react";
-const ShopData = ({setShopName,setShopAddress,setShopPhone}) => {
+import { Button, Textarea, Label, TextInput ,Spinner} from "flowbite-react";
+import { useAuth } from "../../services/provider/AuthContextProvider";
+import { useEffect } from "react";
+const ShopData = ({ setShopName, setShopAddress, setShopPhone,shopName ,shopAddress,shopPhone,loading}) => {
+  const { profile } = useAuth();
+  useEffect(() => {
+    if (profile) {
+      setShopName(profile.shop_name || '');
+      setShopAddress(profile.shop_address || '');
+      setShopPhone(profile.shop_phone || '');
+    }
+  }, [profile]);
+  
   return (
     <>
       <div className="flex max-w-md flex-col gap-4">
@@ -12,8 +23,9 @@ const ShopData = ({setShopName,setShopAddress,setShopPhone}) => {
             id="shopName"
             type="text"
             placeholder="shop name"
+            value={shopName !== undefined ? shopName : ''}
+            onChange={(e) => setShopName(e.target.value)}
             required
-            onChange={(e)=>setShopName(e.target.value)}
           />
         </div>
         <div>
@@ -24,8 +36,9 @@ const ShopData = ({setShopName,setShopAddress,setShopPhone}) => {
             id="shopAddress"
             type="text"
             placeholder="shopAddress"
+            value={shopAddress !== undefined ? shopAddress : ''}
             required
-            onChange={(e)=>setShopAddress(e.target.value)}
+            onChange={(e) => setShopAddress(e.target.value)}
           />
         </div>
         <div>
@@ -36,12 +49,29 @@ const ShopData = ({setShopName,setShopAddress,setShopPhone}) => {
             id="shopPhone"
             type="number"
             placeholder="shop phone"
+            value={shopPhone !== undefined ? shopPhone : ''}
             required
-            onChange={(e)=>setShopPhone(e.target.value)}
+            onChange={(e) => setShopPhone(e.target.value)}
           />
         </div>
-       
-        <Button type="submit" color='blue' className="mt-3">Submit</Button>
+        {loading == true ? (
+            <>
+              <Button type="submit" color="blue" className="w-full ">
+                <Spinner
+                  color="info"
+                  className="me-2"
+                  aria-label="Info spinner example"
+                />
+                Submit
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button type="submit" color="blue" className="w-full">
+                Submit
+              </Button>
+            </>
+          )}
       </div>
     </>
   );

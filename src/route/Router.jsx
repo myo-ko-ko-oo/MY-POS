@@ -9,7 +9,6 @@ import CategoryList from "../views/admin/CategoryList";
 import ProductList from "../views/admin/ProductList";
 import CashierProtectedRoute from "./CashierProtectedRoute";
 import InventoryList from "../views/admin/InventoryList";
-import Cashier from "../views/admin/Cashier";
 import CreateCashier from "../views/admin/CreateCashier";
 import CreateCategory from "../views/admin/CreateCategory";
 import CreateProduct from "../views/admin/CreateProduct";
@@ -18,6 +17,7 @@ import CreateInventory from "../views/admin/CreateInventory";
 import CartPage from "../views/cashier/CartPage";
 import CashFlowList from "../views/admin/CashFlowList";
 import SettingPage from "../views/admin/SettingPage";
+import UserList from "../views/admin/UserList";
 
 function Router() {
   return (
@@ -49,7 +49,7 @@ function Router() {
           <Route path="/admin/create/inventory" Component={CreateInventory} />
           <Route path="/admin/cashflow" Component={CashFlowList} />
 
-          <Route path="/admin/cashier" Component={Cashier} />
+          <Route path="/admin/users" Component={UserList} />
           <Route path="/admin/create/cashier" Component={CreateCashier} />
           <Route path="/admin/setting" Component={SettingPage} />
         </Route>

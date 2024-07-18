@@ -24,7 +24,7 @@ const AdminProtectedRoute = () => {
 
     fetchRole();
   }, []);
-  console.log("adminlayout in render");
+ 
   if (role === null) {
     return <div>Loading...</div>;
   }

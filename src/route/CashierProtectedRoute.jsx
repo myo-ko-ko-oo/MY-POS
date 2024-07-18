@@ -25,7 +25,7 @@ const CashierProtectedRoute = () => {
   if (role === null) {
     return <div>Loading...</div>;
   }
-  console.log("cashier layout is render");
+ 
   return role == "cashier" ? <Outlet /> : <Navigate to={"/login"} />;
 };
 

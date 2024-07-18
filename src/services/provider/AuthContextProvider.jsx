@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import instance from "../api/axios";
 import { useNavigate } from "react-router";
 
 const AuthContext = createContext();
@@ -10,6 +9,7 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState(false);
   const [authUser, setAuthUser] = useState({});
+  const [profile,setProfile]=useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   // Set the headers with the token
@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
     setAuthUser("");
     navigate("/");
   };
-  console.log("auth provider is render");
+ 
   const [inventoryMessage, setInventoryMessage] = useState("");
   return (
     <AuthContext.Provider
@@ -38,6 +38,8 @@ export default function AuthProvider({ children }) {
         logout,
         inventoryMessage,
         setInventoryMessage,
+        profile,
+        setProfile
       }}
     >
       {children}

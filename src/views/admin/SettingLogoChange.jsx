@@ -1,9 +1,15 @@
 import { Avatar } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useAuth } from "../../services/provider/AuthContextProvider";
 
-const SettingLogoChange = ({ photo,setPhoto,setPhotoData }) => {
-  const { authUser } = useAuth();
+const SettingLogoChange = ({ photo, setPhoto, setPhotoData }) => {
+  const { authUser,profile } = useAuth();
+  useEffect(() => {
+    if (profile) {
+      setPhoto(profile.logo_photo || '');
+      
+    }
+  }, [profile]);
   const getFile = async () => {
     const [fileHandle] = await window.showOpenFilePicker({
       types: [
@@ -32,18 +38,7 @@ const SettingLogoChange = ({ photo,setPhoto,setPhotoData }) => {
     const formData = new FormData();
     formData.append("profile", file, fileName);
     setPhotoData(file);
-    console.log(file);
-    // const api = import.meta.env.VITE_API_URL;
-    // const token = localStorage.getItem("token");
-    // const res = await fetch(`${api}/users/profile`, {
-    // 	method: "post",
-    // 	body: formData,
-    // 	headers: {
-    // 		Authorization: `Bearer ${token}`,
-    // 	},
-    // });
-
-    // return res.ok;
+    
   };
   return (
     <>

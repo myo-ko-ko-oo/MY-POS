@@ -2,9 +2,10 @@ import React from "react";
 import { Avatar } from "flowbite-react";
 import instance from "../services/api/axios";
 import { useEffect } from "react";
-import { useState } from "react";
+import { useAuth } from "../services/provider/AuthContextProvider";
+
 function AppLogo() {
-  const [profile, setProfile] = useState([]);
+const{profile,setProfile}=useAuth();
   // Get Profile Data
   const getProfile = async () => {
     try {
@@ -23,7 +24,7 @@ function AppLogo() {
       <div className="flex items-center gap-2">
         <div className="border border-blue-400 rounded-full">
           <Avatar
-            img="https://w7.pngwing.com/pngs/885/966/png-transparent-pos-machine-pax-pax-d920-d920-thumbnail.png"
+            img={profile.logo_photo}
             alt="avatar of Jese"
             rounded
           />

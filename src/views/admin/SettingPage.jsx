@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "./AdminNavbar";
 import SiderBar from "./SideBar";
 import SettingLogoChange from "./SettingLogoChange";
@@ -7,15 +7,15 @@ import { useAuth } from "../../services/provider/AuthContextProvider";
 import ShopData from "./ShopData";
 
 const SettingPage = () => {
-  const [shopName, setShopName] = useState("");
+  const [profile, setProfile] = useState([]);
+  const [shopName, setShopName] = useState(profile.shop_name || "");
   const [shopAddress, setShopAddress] = useState("");
   const [shopPhone, setShopPhone] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(profile.logo_photo || "");
   const [photoData, setPhotoData] = useState("");
   const [loading, setLoading] = useState(false);
   const { headers } = useAuth();
 
-  const [profile, setProfile] = useState([]);
   // Get Profile Data
   const getProfile = async () => {
     try {
@@ -28,6 +28,7 @@ const SettingPage = () => {
 
   useEffect(() => {
     getProfile();
+    setShopName(profile.shop_name);
   }, []);
 
   //Shop Profile Data Update
@@ -35,7 +36,7 @@ const SettingPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const id ="1";
+      const id = "1";
       const res = await instance.post(
         "shop/profile/update",
         {
@@ -43,7 +44,7 @@ const SettingPage = () => {
           shopAddress,
           shopPhone,
           photoData,
-          id
+          id,
         },
         { headers }
       );
@@ -81,6 +82,10 @@ const SettingPage = () => {
                 setShopName={setShopName}
                 setShopAddress={setShopAddress}
                 setShopPhone={setShopPhone}
+                shopName={shopName}
+                shopAddress={shopAddress}
+                shopPhone={shopPhone}
+                loading={loading}
               />
             </div>
           </div>
