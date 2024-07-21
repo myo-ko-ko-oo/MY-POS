@@ -15,19 +15,18 @@ const CheckOutModel = () => {
       >
         Proceed to Checkout
       </Button>
-      {/* <form onSubmit={handleCheckoutConfirm}> */}
-        <Modal
-          dismissible
-          show={openModal}
-          size={"6xl"}
-          onClose={() => setOpenModal(false)}
-        >
-          <Modal.Header>Checkout Detail</Modal.Header>
-          <Modal.Body className="scrollable">
-            <VouncherLayout setOpenModal={setOpenModal} />
-          </Modal.Body>
-        </Modal>
-      {/* </form> */}
+
+      <Modal
+        dismissible
+        show={openModal}
+        size={"6xl"}
+        onClose={() => setOpenModal(false)}
+      >
+        <Modal.Header>Checkout Detail</Modal.Header>
+        <Modal.Body className="scrollable">
+          <VouncherLayout setOpenModal={setOpenModal} />
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

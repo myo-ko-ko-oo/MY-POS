@@ -1,13 +1,10 @@
-import React from "react";
-import DetailCard from "./DetailCard";
 import { Button } from "flowbite-react";
-import { useState } from "react";
 import { useCart } from "../../services/provider/CartContextProvidr";
 import CheckOutModel from "./CheckOutModel";
 
 function CheckOut() {
   const { cart } = useCart();
-
+console.log(cart.length);
   const subtotal = cart.reduce(
     (sum, item) => sum + item.final_price * item.quantity,
     0
@@ -15,8 +12,8 @@ function CheckOut() {
   const tax = 0;
   const totalPayment = subtotal + tax;
 
-   //Make Number Format
-   const formatNumber = (number) => {
+  //Make Number Format
+  const formatNumber = (number) => {
     return number.toLocaleString();
   };
   return (
@@ -37,10 +34,14 @@ function CheckOut() {
           <p className="text-end">{formatNumber(totalPayment)} MMK</p>
         </div>
         <div className="my-5">
-          {/* <Button type="submit" color="blue" className="w-full">
-            Proceed to Checkout
-          </Button> */}
-          <CheckOutModel/>
+          {cart.length == '0' ? (
+            <><Button   color="blue"
+            className="w-full"> Proceed to Checkout</Button></>
+          ) : (
+            <>
+              <CheckOutModel />
+            </>
+          )}
         </div>
       </div>
     </>

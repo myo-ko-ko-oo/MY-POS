@@ -66,7 +66,7 @@ const Receipt = () => {
           saleItems.map((item, i) => (
             <>
               <div key={i} className="grid grid-cols-3  text-xs">
-                <p>{item.product_code}</p>
+                <p key={i}>{item.product_code}</p>
                 <p className="text-center">
                   {item.product_final_price} x {item.qty}
                   <br />

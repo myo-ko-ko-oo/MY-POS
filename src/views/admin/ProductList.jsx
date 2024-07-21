@@ -93,7 +93,7 @@ function ProductList() {
                 <div className="ml-3 text-sm text-black font-normal">
                   {message}
                 </div>
-                <Toast.Toggle />
+                <Toast.Toggle onClick={()=>navigate('/admin/product')}/>
               </Toast>
             )}
           </div>
@@ -127,7 +127,13 @@ function ProductList() {
                           <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                             {p.id}
                           </Table.Cell>
-                          <Table.Cell ><img className="w-[45px] h-[40px] rounded-md object-contain" src={p.image_url} alt="item-img" /></Table.Cell>
+                          <Table.Cell>
+                            <img
+                              className="w-[45px] h-[40px] rounded-md object-contain"
+                              src={p.image_url}
+                              alt="item-img"
+                            />
+                          </Table.Cell>
                           <Table.Cell>{p.name}</Table.Cell>
                           <Table.Cell>{p.code}</Table.Cell>
                           <Table.Cell>{p.price} MMK</Table.Cell>
@@ -148,6 +154,7 @@ function ProductList() {
                                     id={p.id}
                                     products={products}
                                     getProduct={getProduct}
+                                    
                                   />
                                 </span>
                               </Tooltip>

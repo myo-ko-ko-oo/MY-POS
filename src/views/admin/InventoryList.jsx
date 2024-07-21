@@ -79,7 +79,7 @@ const InventoryList = () => {
                 <div className="ml-3 text-sm text-black font-normal">
                   {message}
                 </div>
-                <Toast.Toggle />
+                <Toast.Toggle onClick={()=>navigate("/admin/inventory")}/>
               </Toast>
             )}
           </div>

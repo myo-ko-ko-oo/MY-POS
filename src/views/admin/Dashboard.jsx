@@ -11,7 +11,8 @@ import { useSale } from "../../services/provider/SaleContextProvider";
 function Dashboard() {
   const [profitReports, setProfitReports] = useState([]);
   const { headers } = useAuth();
- const{vouncherCount}=useSale();
+  const { vouncherCount, setVouncherCount } = useSale();
+
   // Get Profit Report
   const getProfitReport = async () => {
     try {
@@ -21,8 +22,20 @@ function Dashboard() {
       console.error("Error fetching profit report:", error);
     }
   };
+
+  // Get SaleVounchers count
+  const getSaleVounchers = async () => {
+    try {
+      const res = await instance.get("get/sale/vouncher", { headers });
+      setVouncherCount(res.data.saleVounchers.length);
+    } catch (error) {
+      console.error("Error fetching saleVounchers:", error);
+    }
+  };
+
   useEffect(() => {
     getProfitReport();
+    getSaleVounchers();
   }, []);
 
   // Net profit calculation
@@ -65,14 +78,16 @@ function Dashboard() {
           </span>
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1">
-          <div className=""> <CsvDownloader profitReports={profitReports}/></div>
-         
-        <DateSearching setProfitReports={setProfitReports}/>
+          <div className="">
+            {" "}
+            <CsvDownloader profitReports={profitReports} />
+          </div>
+
+          <DateSearching setProfitReports={setProfitReports} />
         </div>
-       
+
         {/* <!-- Card Dashboard --> */}
         <div className="mt-12 mb-2">
-          
           <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4 ">
             <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md dark:bg-gray-700">
               <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
@@ -83,7 +98,7 @@ function Dashboard() {
                   Vouncher Count
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                {vouncherCount}
+                  {vouncherCount}
                 </h4>
               </div>
               <div className="border-t border-blue-gray-50 p-4">
@@ -102,7 +117,7 @@ function Dashboard() {
                   Total Sales Revenue
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                  {formatNumber(totalSales)} 
+                  {formatNumber(totalSales)}
                 </h4>
               </div>
               <div className="border-t border-blue-gray-50 p-4">
@@ -120,7 +135,7 @@ function Dashboard() {
                   Total Cost
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                  {formatNumber(totalCost)} 
+                  {formatNumber(totalCost)}
                 </h4>
               </div>
               <div className="border-t border-blue-gray-50 p-4">
@@ -152,7 +167,7 @@ function Dashboard() {
 
         <ProfitReportTabel
           profitReports={profitReports}
-         formatNumber={formatNumber}
+          formatNumber={formatNumber}
         />
       </div>
     </>

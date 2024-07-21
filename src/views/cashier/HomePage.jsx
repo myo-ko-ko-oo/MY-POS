@@ -13,11 +13,30 @@ import { HiCheck } from "react-icons/hi";
 import PrintLayoutModel from "./print/PrintLayoutModel";
 
 function HomePage() {
-  const { setProducts } = useProduct();
+  const { setProducts,setCategories } = useProduct();
   const { headers,setProfile } = useAuth();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
 
+   // Get products list
+   const getProduct = async () => {
+    try {
+      const res = await instance.get("/get/product", { headers });
+      setProducts(res.data.productLists);
+      // console.log(res.data.stockCount);
+    } catch (error) {
+      console.error("Error fetching Products:", error);
+    }
+  };
+   // Get category list
+   const getCategory = async () => {
+    try {
+      const res = await instance.get("/get/category", { headers });
+      setCategories(res.data.categories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
    // Get Profile Data
    const getProfile = async () => {
     try {
@@ -29,22 +48,9 @@ function HomePage() {
   };
 
   useEffect(() => {
-    getProfile();
-  }, []);
-
-  // Get products list
-  const getProduct = async () => {
-    try {
-      const res = await instance.get("/get/product", { headers });
-      setProducts(res.data.productLists);
-      // console.log(res.data.stockCount);
-    } catch (error) {
-      console.error("Error fetching Products:", error);
-    }
-  };
-
-  useEffect(() => {
     getProduct();
+    getCategory();
+    getProfile();
   }, []);
 
   return (

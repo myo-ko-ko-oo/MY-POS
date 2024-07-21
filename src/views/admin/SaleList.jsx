@@ -7,11 +7,9 @@ import { useAuth } from "../../services/provider/AuthContextProvider";
 import dateFormat from "dateformat";
 import PaginationUi from "./PaginationUi";
 import SaleCsvDownload from "./SaleCsvDownload";
-import { useSale } from "../../services/provider/SaleContextProvider";
 
 const SaleList = () => {
   const { headers } = useAuth();
-  const {setVouncherCount}=useSale();
   const [saleVounchers, setsaleVounchers] = useState([]);
 
   // Get category list
@@ -19,7 +17,6 @@ const SaleList = () => {
     try {
       const res = await instance.get("get/sale/vouncher", { headers });
       setsaleVounchers(res.data.saleVounchers);
-      setVouncherCount(res.data.saleVounchers.length);
     } catch (error) {
       console.error("Error fetching saleVounchers:", error);
     }

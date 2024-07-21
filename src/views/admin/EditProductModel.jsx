@@ -63,11 +63,11 @@ const EditProductModel = ({ id, products, getProduct }) => {
     const fileUploaded = event.target.files[0];
     setProductImage(fileUploaded);
   };
-  console.log(products);
+
   useEffect(() => {
     const product = products.find((p) => p.id === id);
     if (product) {
-      setCategoryId(product.categor_id);
+      setCategoryId(product.category_id);
       setProductName(product.name);
       setProductCode(product.code);
       setSalePrice(product.price);
@@ -99,9 +99,9 @@ const EditProductModel = ({ id, products, getProduct }) => {
       if (res.data.update == true) {
         setOpenModal(false);
         getProduct();
+       
         navigate(`/admin/product?message=${res.data.message}`);
       }
-      console.log(res.data.message);
     } catch (error) {
       console.error("Error update Product:", error);
     } finally {
@@ -126,6 +126,7 @@ const EditProductModel = ({ id, products, getProduct }) => {
                   </div>
                   <Select
                     id="countries"
+                    value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
                   >
                     <option>Select Category</option>

@@ -9,27 +9,33 @@ import { useEffect } from "react";
 const SearchBox = () => {
   const [searchKey, setSearchKey] = useState("");
   const { setProducts } = useProduct();
-  const [allProducts, setAllProducts] = useState([]);
   const { headers } = useAuth();
-  // Get all products
+
   const getProducts = async () => {
     try {
       const res = await instance.get("/get/product", { headers });
-      setAllProducts(res.data.productLists);
+      return res.data.productLists;
     } catch (error) {
       console.error("Error fetching products:", error);
+      return [];
+    }
+  };
+  const searchByKey = async () => {
+    const products = await getProducts();
+    if (!searchKey.trim()) {
+      setProducts(products); // Show all products if search key is empty
+    } else {
+      const search = products.filter((product) =>
+        product.name.toLowerCase().includes(searchKey.toLowerCase())
+      );
+      setProducts(search);
     }
   };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const searchByKey = () => {
-    const search = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(searchKey.toLowerCase())
-    );
-    setProducts(search);
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      searchByKey();
+    }
   };
   return (
     <>
@@ -39,6 +45,7 @@ const SearchBox = () => {
           id="small"
           type="text"
           sizing="sm"
+          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchKey(e.target.value)}
         />
         <span onClick={searchByKey} className="p-3 cursor-pointer">

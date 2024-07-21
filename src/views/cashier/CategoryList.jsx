@@ -6,44 +6,29 @@ import { useProduct } from "../../services/provider/ProductContextProvider";
 
 const CategoryList = () => {
   const { headers } = useAuth();
-  const [categories, setCategories] = useState([]);
-  const { products, setProducts } = useProduct();
-  const [allProducts, setAllProducts] = useState([]);
-  // Get category list
-  const getCategory = async () => {
-    try {
-      const res = await instance.get("/get/category", { headers });
-      setCategories(res.data.categories);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
+  const { setProducts,categories } = useProduct();
 
-  useEffect(() => {
-    getCategory();
-  }, []);
-
-  // Get all products
-  const getProducts = async () => {
+  // Get products by category
+  const getProducts = async (categoryId) => {
     try {
       const res = await instance.get("/get/product", { headers });
-      setAllProducts(res.data.productLists);
-      // setProducts(res.data.products);
+      const products = res.data.productLists;
+      if (categoryId) {
+        const filteredProducts = products.filter(
+          (product) => product.category_id === categoryId
+        );
+        setProducts(filteredProducts);
+      } else {
+        setProducts(products);
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
-  useEffect(() => {
-    getCategory();
-    getProducts();
-  }, []);
 
   const searchCategory = (id) => {
-    const searchByCategory = allProducts.filter(
-      (product) => product.category_id === id
-    );
-    setProducts(searchByCategory);
+    getProducts(id);
   };
 
   return (
@@ -53,7 +38,7 @@ const CategoryList = () => {
           <div className="font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l   dark:focus:ring-purple-800  rounded-lg  px-5 py-3 text-center  mb-2">
             Category List
           </div>
-          <ListGroup.Item onClick={() => setProducts(allProducts)}>
+          <ListGroup.Item onClick={() => getProducts(null)}>
             All
           </ListGroup.Item>
           {categories &&

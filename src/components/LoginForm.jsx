@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Label, TextInput,Spinner } from "flowbite-react";
+import { Button, Checkbox, Label, TextInput, Spinner } from "flowbite-react";
 import instance from "../services/api/axios";
 import { useNavigate } from "react-router";
 import { useAuth } from "../services/provider/AuthContextProvider";
@@ -10,9 +10,8 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const { setAuth, setAuthUser } = useAuth();
-  console.log(email, password);
+console.log(error);
   //handel login
   const handelLogin = async (e) => {
     e.preventDefault();
@@ -23,15 +22,13 @@ function LoginForm() {
       if (res.data.auth == true) {
         localStorage.setItem("token", res.data.token);
         setAuth(res.data.auth);
-        console.log(res.data.auth, "auth data");
+
         const verify = await instance.get("/verify", {
           headers: {
             Authorization: `Bearer ${res.data.token}`,
           },
         });
 
-        console.log(verify.data.user, "verify data");
-        console.log(verify.data.user.role);
         setAuth(verify.data.auth);
         setAuthUser(verify.data.user);
         setEmail("");
@@ -70,9 +67,9 @@ function LoginForm() {
             />
             {error && (
               <div className="error-massage mt-1">
-                <span className="text-red-600 font-semibold">
+                <small className="text-red-600 font-semibold">
                   {error.email}
-                </span>
+                </small>
               </div>
             )}
           </div>
@@ -88,9 +85,9 @@ function LoginForm() {
             />
             {error && (
               <div className="error-massage mt-1">
-                <span className="text-red-600 font-semibold">
-                  {error.passwor}
-                </span>
+                <small className="text-red-600 font-semibold">
+                  {error.password}
+                </small>
               </div>
             )}
           </div>
