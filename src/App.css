@@ -13,7 +13,7 @@
   padding: 0;
 }
 .hr-dash-single{
-  border-top: 2px dashed black;
+  border-top: 1px dashed black;
   border-radius: 5px;
-  border-bottom: 2px dashed black;
+  border-bottom: 1px dashed black;
 }

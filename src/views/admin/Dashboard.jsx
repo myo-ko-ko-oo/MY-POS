@@ -5,11 +5,13 @@ import ProfitReportTabel from "./ProfitReportTabel";
 import instance from "../../services/api/axios";
 import { useAuth } from "../../services/provider/AuthContextProvider";
 import DateSearching from "./DateSearching";
+import CsvDownloader from "./CsvDownloader";
+import { useSale } from "../../services/provider/SaleContextProvider";
 
 function Dashboard() {
   const [profitReports, setProfitReports] = useState([]);
   const { headers } = useAuth();
-  console.log(profitReports);
+ const{vouncherCount}=useSale();
   // Get Profit Report
   const getProfitReport = async () => {
     try {
@@ -62,7 +64,12 @@ function Dashboard() {
             Dashboard
           </span>
         </div>
+        <div className="grid md:grid-cols-2 grid-cols-1">
+          <div className=""> <CsvDownloader profitReports={profitReports}/></div>
+         
         <DateSearching setProfitReports={setProfitReports}/>
+        </div>
+       
         {/* <!-- Card Dashboard --> */}
         <div className="mt-12 mb-2">
           
@@ -76,7 +83,7 @@ function Dashboard() {
                   Vouncher Count
                 </p>
                 <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                  55
+                {vouncherCount}
                 </h4>
               </div>
               <div className="border-t border-blue-gray-50 p-4">

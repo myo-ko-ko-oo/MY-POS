@@ -1,16 +1,20 @@
-import React from 'react'
-import { useCart } from '../../services/provider/CartContextProvidr'
+import React from "react";
+import { useCart } from "../../services/provider/CartContextProvidr";
 
 const RemoveCardIcon = () => {
-    const {clearCart}=useCart();
+  const { clearCart } = useCart();
 
   return (
     <>
-    <span className='cursor-pointer' onClick={() => clearCart()}>
-    <i className="fa-solid fa-eraser text-lg me-1"></i>  Remove All
-    </span>
+      <span
+        className="cursor-pointer  p-1 md:p-2 "
+        onClick={() => clearCart()}
+      >
+        <i className="fa-solid fa-eraser text-xl lg:ms-0 ms-3 me-1"></i>
+        Remove
+      </span>
     </>
-  )
-}
+  );
+};
 
-export default RemoveCardIcon
+export default RemoveCardIcon;

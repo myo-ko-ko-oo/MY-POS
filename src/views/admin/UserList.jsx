@@ -1,11 +1,10 @@
-import React,{ useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table, Select, Toast, Tooltip } from "flowbite-react";
-import { HiX } from "react-icons/hi";
+import { HiCheck } from "react-icons/hi";
 import AdminNavbar from "./AdminNavbar";
 import SideBar from "./SideBar";
 import { useNavigate } from "react-router";
 import { MdDeleteForever as DeleteIcon } from "react-icons/md";
-import { FaReadme as ReadMoreIcon } from "react-icons/fa";
 import { useAuth } from "../../services/provider/AuthContextProvider";
 import instance from "../../services/api/axios";
 import dateFormat from "dateformat";
@@ -14,8 +13,9 @@ const UserList = () => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
-  const { headers } = useAuth();
+  const { headers, authUser } = useAuth();
   const [users, setUsers] = useState([]);
+  console.log(users, authUser);
   const getUsers = async () => {
     try {
       const res = await instance.get("get/user", { headers });
@@ -25,6 +25,18 @@ const UserList = () => {
   useEffect(() => {
     getUsers();
   }, []);
+
+   // Delete user
+   const deleteUser = async (userId) => {
+    try {
+      const response = await instance.delete(`/user/${userId}`, {
+        headers,
+      });
+      setUsers(users.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error("Error deleting User:", error);
+    }
+  };
   return (
     <>
       <AdminNavbar />
@@ -82,17 +94,23 @@ const UserList = () => {
                   <>
                     {users &&
                       users.map((user, i) => (
-                        <Table.Row key={i} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Row
+                          key={i}
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        >
                           <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                           {user.id}
+                            {user.id}
                           </Table.Cell>
                           <Table.Cell>{user.name}</Table.Cell>
                           <Table.Cell>{user.email}</Table.Cell>
                           <Table.Cell>{user.role}</Table.Cell>
-                          <Table.Cell> {dateFormat(user.created_at, "dd-mmm-yyyy")}</Table.Cell>
+                          <Table.Cell>
+                            {" "}
+                            {dateFormat(user.created_at, "dd-mmm-yyyy")}
+                          </Table.Cell>
                           <Table.Cell>
                             <div className="flex items-center gap-3">
-                              <Tooltip
+                              {/* <Tooltip
                                 className=""
                                 content="read more"
                                 placement="bottom"
@@ -100,17 +118,22 @@ const UserList = () => {
                                 <span>
                                   <ReadMoreIcon className="text-blue-500 inline text-3xl cursor-pointer" />
                                 </span>
-                              </Tooltip>
-
-                              <Tooltip
-                                className=""
-                                content="delete"
-                                placement="bottom"
-                              >
-                                <span>
-                                  <DeleteIcon className="text-red-500 inline text-3xl cursor-pointer" />
-                                </span>
-                              </Tooltip>
+                              </Tooltip> */}
+                              {authUser&&authUser.email == user.email ? (
+                                <></>
+                              ) : (
+                                <>
+                                  <Tooltip
+                                    className=""
+                                    content="delete"
+                                    placement="bottom"
+                                  >
+                                    <span onClick={() => deleteUser(user.id)}>
+                                      <DeleteIcon className="text-red-500 inline text-3xl cursor-pointer" />
+                                    </span>
+                                  </Tooltip>
+                                </>
+                              )}
                             </div>
                           </Table.Cell>
                         </Table.Row>

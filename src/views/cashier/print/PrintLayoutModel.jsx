@@ -4,7 +4,7 @@ import { useSale } from "../../../services/provider/SaleContextProvider";
 import Receipt from "./Receipt";
 
 const PrintLayoutModel = () => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const { handlePrintSale } = useSale();
   const handelReceiptPrint = async () => {
     await handlePrintSale();

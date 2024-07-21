@@ -18,6 +18,7 @@ import CartPage from "../views/cashier/CartPage";
 import CashFlowList from "../views/admin/CashFlowList";
 import SettingPage from "../views/admin/SettingPage";
 import UserList from "../views/admin/UserList";
+import SaleList from "../views/admin/SaleList";
 
 function Router() {
   return (
@@ -41,6 +42,7 @@ function Router() {
         {/*======= admin Protected Route ======== */}
         <Route element={<AdminProtectedRoute />}>
           <Route path="/admin/dashboard" Component={Dashboard} />
+          <Route path="/admin/sale" Component={SaleList} />
           <Route path="/admin/category" Component={CategoryList} />
           <Route path="/admin/create/category" Component={CreateCategory} />
           <Route path="/admin/product" Component={ProductList} />

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { useAuth } from "../../../services/provider/AuthContextProvider";
 import { useSale } from "../../../services/provider/SaleContextProvider";
 import dateFormat from "dateformat";
@@ -62,17 +61,18 @@ const Receipt = () => {
           <p>amount</p>
         </div>
         <hr className="hr-dash-single my-2" />
+        
         {saleItems &&
           saleItems.map((item, i) => (
             <>
-              <div key={i} className="flex justify-between text-xs">
+              <div key={i} className="grid grid-cols-3  text-xs">
                 <p>{item.product_code}</p>
-                <p>
+                <p className="text-center">
                   {item.product_final_price} x {item.qty}
                   <br />
                   ({item.product_reduce}%)
                 </p>
-                <p>
+                <p className="text-end">
                   {formatNumber(
                     parseInt(item.product_final_price) * parseInt(item.qty)
                   )}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table, Tooltip, Toast } from "flowbite-react";
-import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
+import { HiCheck } from "react-icons/hi";
 import AdminNavbar from "./AdminNavbar";
 import SideBar from "./SideBar";
 import { MdDeleteForever as DeleteIcon } from "react-icons/md";
-import { FaReadme as ReadMoreIcon } from "react-icons/fa";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useAuth } from "../../services/provider/AuthContextProvider";
 import instance from "../../services/api/axios";
@@ -16,8 +15,8 @@ const InventoryList = () => {
   const navigate = useNavigate();
   const { headers } = useAuth();
   const [inventories, setInventories] = useState("");
-  const location = useLocation();
-  console.log(location.state);
+  const searchParams = new URLSearchParams(location.search);
+  const message = searchParams.get("message");
   // Get inventory list
   const getInventory = async () => {
     try {
@@ -35,7 +34,7 @@ const InventoryList = () => {
    const [currentPage, setCurrentPage] = useState(1);
    const itemsPerPage = 10; // Number of items per page
    let inventory = Array.from(
-     { length: 20 },
+     { length: 50 },
      (_, index) => `Inventory ${index + 1}`
    );
    const totalItems = inventory.length;
@@ -72,13 +71,13 @@ const InventoryList = () => {
           </div>
 
           <div className="mt-2 flex justify-center md:justify-end">
-            { location.state && (
+            { message && (
               <Toast className="bg-green-300">
                 <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
                   <HiCheck className="h-5 w-5" />
                 </div>
                 <div className="ml-3 text-sm text-black font-normal">
-                  {location.state}
+                  {message}
                 </div>
                 <Toast.Toggle />
               </Toast>
@@ -125,7 +124,7 @@ const InventoryList = () => {
                             {dateFormat(inventory.created_at, "dd-mmm-yyyy")}
                           </Table.Cell>
                           <Table.Cell>
-                            <span className="flex items-center gap-3">
+                            {/* <span className="flex items-center gap-3">
                               <Tooltip
                                 className=""
                                 content="edit"
@@ -148,7 +147,7 @@ const InventoryList = () => {
                                   <DeleteIcon className="text-red-500 inline text-3xl cursor-pointer" />
                                 </span>
                               </Tooltip>
-                            </span>
+                            </span> */}
                           </Table.Cell>
                         </Table.Row>
                       ))}

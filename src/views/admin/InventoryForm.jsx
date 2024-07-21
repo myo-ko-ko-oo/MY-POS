@@ -67,7 +67,7 @@ const InventoryForm = () => {
         { headers }
       );
 
-      navigate("/admin/inventory",{state:(res.data.message)} );
+      navigate(`/admin/inventory?message=${res.data.message}` );
     } catch (e) {
       if (e.response.status === 422) {
         setError(e.response.data.errors);

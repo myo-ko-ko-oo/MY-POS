@@ -8,7 +8,7 @@ const CartIcon = () => {
   return (
     <>
       <div className="text-end relative me-3">
-        <small className="absolute -top-5 -right-1  z-100 bg-red-500 py-1 px-2.5 text-white rounded-full">
+        <small className="absolute -top-6 -right-1  z-100 bg-red-500 py-1 px-2.5 text-white rounded-full">
           {cart&& cart.length}
         </small>
         <span onClick={()=>navigate("/cashier/cart")} className="z-10 p-1 md:p-2  rounded-md cursor-pointer">

@@ -14,9 +14,23 @@ import PrintLayoutModel from "./print/PrintLayoutModel";
 
 function HomePage() {
   const { setProducts } = useProduct();
-  const { headers } = useAuth();
+  const { headers,setProfile } = useAuth();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
+
+   // Get Profile Data
+   const getProfile = async () => {
+    try {
+      const res = await instance.get("get/shop/profile");
+      setProfile(res.data.profile);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   // Get products list
   const getProduct = async () => {
@@ -46,22 +60,23 @@ function HomePage() {
           </Toast>
         )}
       </div>
-      <div className="fiveGrid mx-3">
+      <div className="fiveGrid mx-3 ">
         <div className="col-span-1"></div>
-        <div className="col-span-5 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <HomeIcon />
-            <CartIcon />
-            <RemoveCardIcon />
-            {/* <PrintReceipt/> */}
-            <PrintLayoutModel />
-          </div>
-          <div className="">
-            <SearchBox />
+        <div className="col-span-5 ">
+          <div className="grid md:grid-cols-4 grid-cols-1 ">
+            <div className="col-span-3 text-xs md:text-base flex items-center gap-4">
+              <HomeIcon />
+              <CartIcon />
+              <RemoveCardIcon />
+              <PrintLayoutModel />
+            </div>
+            <div className="mx-auto ">
+              <SearchBox />
+            </div>
           </div>
         </div>
       </div>
-      <div className="fiveGrid">
+      <div className="fiveGrid h-screen">
         <div className="col-span-1 p-2 ">
           <CategoryList />
         </div>

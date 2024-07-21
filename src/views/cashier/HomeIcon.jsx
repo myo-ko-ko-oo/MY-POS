@@ -8,7 +8,7 @@ const HomeIcon = () => {
         onClick={() => navigate("/cashier/home")}
         className="z-10 p-1 md:p-2  rounded-md cursor-pointer"
       >
-        <i className="fa-solid fa-house-user me-2 text-lg"></i>Home
+        <i className="fa-solid fa-house-user ms-1 me-2 text-lg"></i>Home
       </span>
     </>
   );

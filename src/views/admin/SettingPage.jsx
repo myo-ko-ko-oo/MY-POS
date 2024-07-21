@@ -5,16 +5,19 @@ import SettingLogoChange from "./SettingLogoChange";
 import instance from "../../services/api/axios";
 import { useAuth } from "../../services/provider/AuthContextProvider";
 import ShopData from "./ShopData";
+import { HiCheck } from "react-icons/hi";
+import {  Toast } from "flowbite-react";
 
 const SettingPage = () => {
-  const [profile, setProfile] = useState([]);
-  const [shopName, setShopName] = useState(profile.shop_name || "");
+  // const [profile, setProfile] = useState([]);
+  const [shopName, setShopName] = useState( "");
   const [shopAddress, setShopAddress] = useState("");
   const [shopPhone, setShopPhone] = useState("");
-  const [photo, setPhoto] = useState(profile.logo_photo || "");
+  const [photo, setPhoto] = useState("");
   const [photoData, setPhotoData] = useState("");
   const [loading, setLoading] = useState(false);
-  const { headers } = useAuth();
+  const { headers,setProfile } = useAuth();
+  const [message,setMessage]=useState("");
 
   // Get Profile Data
   const getProfile = async () => {
@@ -28,7 +31,6 @@ const SettingPage = () => {
 
   useEffect(() => {
     getProfile();
-    setShopName(profile.shop_name);
   }, []);
 
   //Shop Profile Data Update
@@ -48,6 +50,7 @@ const SettingPage = () => {
         },
         { headers }
       );
+      setMessage(res.data.message);
     } catch (e) {
     } finally {
       setLoading(false);
@@ -68,6 +71,27 @@ const SettingPage = () => {
             setting
           </span>
         </div>
+
+        <div className="w-full grid grid-cols-1 md:grid-cols-2  mb-5">
+          <div className="">
+           
+          </div>
+
+          <div className="mt-2 flex justify-center md:justify-end">
+            { message && (
+              <Toast className="bg-green-300">
+                <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                  <HiCheck className="h-5 w-5" />
+                </div>
+                <div className="ml-3 text-sm text-black font-normal">
+                  {message}
+                </div>
+                <Toast.Toggle />
+              </Toast>
+            )}
+          </div>
+        </div>
+
         <form onSubmit={handelProfileData}>
           <div className="grid grid-cols-1 md:grid-cols-4 pt-5">
             <div className="py-3 mx-auto">

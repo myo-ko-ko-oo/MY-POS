@@ -17,6 +17,15 @@ const SiderBar = () => {
                 <span className="ml-3">Dashboard</span>
               </a>
             </li>
+            <li className="mt-6">
+              <a
+                onClick={() => navigate("/admin/sale")}
+                className="cursor-pointer flex items-center p-2  text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <i className="fa-solid fa-gauge-high text-xl text-blue-600 dark:text-gray-400 transition duration-75  group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                <span className="ml-3">Sale</span>
+              </a>
+            </li>
             <li>
               <a
                 onClick={() => navigate("/admin/category")}

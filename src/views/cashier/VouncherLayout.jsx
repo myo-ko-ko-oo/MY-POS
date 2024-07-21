@@ -73,7 +73,6 @@ const VouncherLayout = ({ setOpenModal }) => {
       // localStorage.setItem('receipt',JSON.stringify(res.data.saleItems));
       clearCart();
       navigate(`/cashier/home?message=${res.data.message}`);
-      
     } catch (error) {
     } finally {
       setLoading(false);
@@ -188,7 +187,6 @@ const VouncherLayout = ({ setOpenModal }) => {
             </Button>
           </div>
         </div>
-        <Receipt />
       </form>
     </>
   );
