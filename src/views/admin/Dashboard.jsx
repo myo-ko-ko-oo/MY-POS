@@ -79,7 +79,6 @@ function Dashboard() {
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1">
           <div className="">
-            {" "}
             <CsvDownloader profitReports={profitReports} />
           </div>
 

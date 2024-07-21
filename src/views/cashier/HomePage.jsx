@@ -11,12 +11,14 @@ import { useAuth } from "../../services/provider/AuthContextProvider";
 import { Toast } from "flowbite-react";
 import { HiCheck } from "react-icons/hi";
 import PrintLayoutModel from "./print/PrintLayoutModel";
+import { useNavigate } from "react-router";
 
 function HomePage() {
   const { setProducts,setCategories } = useProduct();
   const { headers,setProfile } = useAuth();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
+  const navigate=useNavigate();
 
    // Get products list
    const getProduct = async () => {
@@ -62,7 +64,7 @@ function HomePage() {
               <HiCheck className="h-5 w-5" />
             </div>
             <div className="ml-3 text-sm text-black font-normal">{message}</div>
-            <Toast.Toggle />
+            <Toast.Toggle onClick={()=>navigate("/cashier/home")}/>
           </Toast>
         )}
       </div>

@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import HomeIcon from "./HomeIcon";
 import CartIcon from "./CartIcon";
 import DetailCard from "./DetailCard";
 import CheckOut from "./CheckOut";
-import instance from "../../services/api/axios";
-import { useAuth } from "../../services/provider/AuthContextProvider";
 import RemoveCardIcon from "./RemoveCardIcon";
 
 const CartPage = () => {
-  const [carts, setCarts] = useState([]);
-  const {headers}=useAuth();
-  // console.log(carts);
-  // Get cart data
-  // const getCart = async () => {
-  //   try {
-  //     const res = await instance.get("get/card", { headers });
-  //     setCarts(res.data.cartData);
-  //     console.log(res.data.cartData);
-  //   } catch (error) {
-  //     console.error("Error fetching Carts:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getCart();
-  // }, []);
   return (
     <>
       <div className="fiveGrid mx-3 ">
@@ -33,7 +14,7 @@ const CartPage = () => {
           <div className="flex items-center gap-4">
             <HomeIcon />
             <CartIcon />
-            <RemoveCardIcon/>
+            <RemoveCardIcon />
           </div>
         </div>
       </div>
@@ -42,7 +23,7 @@ const CartPage = () => {
       </div>
       <div className="threeGrid gap-3">
         <div className="cart-tabel col-span-2">
-          <DetailCard carts={carts} />
+          <DetailCard />
         </div>
         <div className="checkout">
           <CheckOut />
