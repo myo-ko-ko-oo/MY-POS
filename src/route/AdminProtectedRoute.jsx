@@ -24,9 +24,13 @@ const AdminProtectedRoute = () => {
 
     fetchRole();
   }, []);
- 
+
   if (role === null) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center min-h-screen my-10">
+        <p>Loading...</p>
+      </div>
+    );
   }
   return role == "admin" ? <Outlet /> : <Navigate to={"/login"} />;
 };

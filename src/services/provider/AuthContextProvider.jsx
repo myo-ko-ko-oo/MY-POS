@@ -9,7 +9,7 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState(false);
   const [authUser, setAuthUser] = useState({});
-  const [profile,setProfile]=useState([]);
+  const [profile, setProfile] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   // Set the headers with the token
@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
     setAuthUser("");
     navigate("/");
   };
- 
+
   const [inventoryMessage, setInventoryMessage] = useState("");
   return (
     <AuthContext.Provider
@@ -39,7 +39,7 @@ export default function AuthProvider({ children }) {
         inventoryMessage,
         setInventoryMessage,
         profile,
-        setProfile
+        setProfile,
       }}
     >
       {children}
